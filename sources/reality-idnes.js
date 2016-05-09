@@ -3,7 +3,7 @@
 var cheerio = require('cheerio');
 var request = require('request');
 
-module.exports = {
+var Source = module.exports = {
 
 	getData: function(options) {
 
@@ -51,23 +51,23 @@ module.exports = {
 
 			var results = [];
 
-			// var $ = cheerio.load(html);
-			// var tables = $('.traffic-table:not([id])');
+			 var $ = cheerio.load(html);
+			 var items = $('.item');
 
-			// tables.each(function() {
+			 items.each(function() {
 
-			// 	var table = $(this);
-			// 	var rows = table.find('tbody tr');
+			 	var item = $(this);
+			 	var href = item.find("h2 a").attr('href');
 
-			// 	rows.each(function() {
-
-			// 		var row = $(this);
-			// 		var day = row.find('th:first-child').text();
-			// 		console.log(day);
-			// 	});
-			// });
+                                results.push(href);
+			 });
 
 			cb(null, results);
 		});
 	}
 };
+
+Source.getResults(1,function(error, results){
+    console.log(error);
+    console.log(results);
+});
